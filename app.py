@@ -1,0 +1,535 @@
+import streamlit as st
+import pandas as pd
+from io import BytesIO
+from datetime import date
+
+import os
+from openpyxl import load_workbook
+
+import pandas as pd
+from io import BytesIO
+from openpyxl import load_workbook
+
+
+def save_to_excel(df: pd.DataFrame, file_path="data.xlsx") -> bytes:
+    try:
+        book = load_workbook(file_path)
+    except FileNotFoundError:
+        book = None
+
+    output = BytesIO()
+    with pd.ExcelWriter(output, engine="openpyxl") as writer:
+        if book:
+            writer._book = book
+            if "Sheet1" in book.sheetnames:
+                del book["Sheet1"]
+        df.to_excel(writer, index=False, sheet_name="Sheet1")
+
+    return output.getvalue()
+
+
+
+
+def main():
+    st.title("General Information")  
+    
+    #options
+    terrain_options = ["Granitic","Granitoid gneiss","gneiss","charnockite", "khondalite","Basaltic","Limestone","Laterite","Quartzite",
+                       "Migmatite","Shale","Schist","Dolerite","Anorthosite / gabbro / dunite","Porphyritic granite","Metabasite","Migmatitic","Alluvial-covered basement"
+                      ]
+    
+    geomorphic_options = ["Pediplain shallow","Pediplain moderate","Pediment","Inselberg complex","Dyke ridge","Plateau slightly dissected",
+                       "Plateau moderately dissected","Pediment Inselberg complex","Valley fill shallow","Denudational hill",
+                       "Buried Pediplain shallow","Inselberg","Plateau undissected","Pediplain moderate-Pediplain shallow","Pediplain shallow-Pediment",
+                       "Pediplain moderate-Pediment","Pediplain shallow-Dyke ridge","Pediment-Inselberg complex","Inselberg-Dyke ridge",
+                       "Buried pediplain shallow-Pediplain moderate","Water body-Pediplain moderate"]
+    
+    soil_type_options =["Black Cotton Soil","Red Soil","Brown soil(dark)","Brown Soil (light)","Laterite soil","Clay"]
+    
+    des_soil_options = ["Black Cotton Soil typically expansive, fine-grained and shrink-swell prone—low permeability limits infiltration, often causing surface water retention.",
+                 "Red Soil generally well-drained and moderately porous—supports decent infiltration but low water-holding capacity due to low clay and organic matter.",
+                 "Brown Soils  moderately fertile and better structured—supports moderate infiltration and retains moisture reasonably well.",
+                 "Brown Soils  lighter texture with lower organic content—offers fair infiltration but limited water retention.",
+                 "Laterite Soils tropical, highly porous and leached—can be coarse-grained, enabling fast infiltration though often degraded.",
+                 "Clay, fine-textured, compact and poorly drained—very low permeability restricts groundwater recharge but retains moisture near surface."
+                ]
+    
+    year_rainfall_options = ["2023-2024","2024-2025","2025-2026","2026-2027","2027-2028","2028-2029","2029-2030","2030-2031","2031-2032",
+             "2032-2033","2033-2034","2034-2035","2035-2036","2036-2037","2037-2038","2039-2040"]
+    water_quality_options = ["good to moderate","moderate to poor","poor","Good"]
+    
+    grad_trav_direction_options = ["EW","NS","NE-SW","NW-SE"]
+    
+    type_of_land_options = ["Agricultural / cropland land","Form land","Plot","Barren land","Hilly terrain","Mountainous terrain","Valleys / colluvial fans","Terraces","Gentle to rolling terrain","Forest / scrub"
+                           ]
+    grad_station_int_options = ["5m","10m","15m","20m"]
+    c1c2_options =["200m","300m","400m","500m","600m","700m","800m","900m","1000m"]
+    admt_electrode_int_options = ["0.5m","1m","1.5m","2m","2.5m","3m","3.5m","4m","4.5m","5m"]
+    yields_options = ["1 - 1.5","1.5 - 2","2 - 2.5","> 1.5","< 1.5"]
+    
+     
+    
+    client_name = st.text_input("client_name")
+    date_selected = st.date_input("Survey_Date", value=date.today())
+    ref_no = st.text_input("Project Name/Reference",help="SN/12/2025")
+    village = st.text_input("village")
+    mandal = st.text_input("mandal")
+    district = st.text_input("district")
+    state = st.text_input("state")
+    pin = st.text_input("Pincode")
+    area = st.text_input("area",help="15 Acres")
+    nearest_town = st.text_input("Type Nearest Town")
+    to_nearest_town = st.text_input("Distcne To Nearest Town")
+    nearest_city = st.text_input("Type Nearest City")
+    to_nearest_city = st.text_input("Distcne To Nearest City")
+    
+    type_of_land = st.selectbox("Type_Of_Land",options=type_of_land_options + ["Other"])
+    if type_of_land == "Other":
+        type_of_land_manual = st.text_input("Enter type of land: ")
+        if type_of_land_manual:
+            type_of_land = type_of_land_manual
+    
+    
+    min_lat = st.text_input("min_lat")
+    max_lat = st.text_input("max_lat")
+    min_lon = st.text_input("min_lon")
+    max_lon = st.text_input("max_lon")
+    highest_elevation = st.text_input("Highest Elevation",help="330m in the NW corner")
+    lowest_elevation = st.text_input("Lowest Elevation",help= "250m in NS Corner")
+    
+    
+    rain_fall = st.text_input("Rain fall",value="600 mm")
+    
+    
+    year_rainfall = st.selectbox("Select Year",options=year_rainfall_options +["Other"])    
+    if year_rainfall == "Other":
+        year_rainfall_manual = st.text_input("Type year_range")
+        if year_rainfall_manual:
+            year_rainfall = year_rainfall_manual
+            
+    temp = st.text_input("Temperature",value="15 deg. C – 45 deg. C")
+    
+    yield_from_prospects = st.text_input("Yield From Prospects", value="30 to 80 m and >80m deep well and 30 to 50 and 100 to 200 LPM yield")
+    
+    water_quality = st.selectbox("Water Quality",options= water_quality_options + ["Other"])
+    if water_quality == "Other":
+        water_quality_manual = st.text_input("Type water quality ")
+        if water_quality_manual:
+            water_quality = water_quality_manual
+    
+    
+    
+    no_grad_trav = st.text_input("Number of Grad Traverses")
+    grad_trav_direction = st.selectbox("Gradient Line Direction",options=grad_trav_direction_options + ["Other"])
+    
+    if grad_trav_direction == 'Other':
+        grad_trav_direction_manual = st.text_input("Type Gradient Line Direction")
+        if grad_trav_direction_manual:
+            grad_trav_direction = grad_trav_direction_manual
+            
+    grad_trav_name = st.text_input("Name of Grad Traverses",help="Trav-0, N50, N90 and N100 and S50, S100")
+    
+    grad_station_int = st.selectbox("Grad_station_interval",options=grad_station_int_options +  ["Other"]) 
+    if grad_station_int == "Other":
+        grad_station_int_manual = st.text_input("Eter gradient station interval")
+        if grad_station_int_manual:
+            grad_station_int = grad_station_int_manual
+    
+    c1c2 = st.selectbox("C1C2",options=c1c2_options+["Other"])
+    if c1c2 == "Other":
+        c1c2_manual =st.text_input("Enter c1c2 spacing")
+        if c1c2_manual:
+            c1c2 = c1c2_manual
+    res_highs = st.text_input("Risistivity High Range",help="1200-800")
+    res_high_extends = st.text_input("High Resisvity Extends",value="North to South")
+    res_low = st.text_input("Risistivity Low Range",value="300-150")
+    res_low_extends = st.text_input("Low Resisvity Extends",value="South west and Nort East parts")
+    res_low_trend_des = st.text_input("Low Resistivity Trends Description",help="in the southwest and northwest part as well in northeast region may reflects  presence of  fracture system in the study area")
+    res_relief = st.text_input("Resistivity- Relief value")
+    
+    admt_electrode_int = st.selectbox("ADMT_Electode Spacing",options=admt_electrode_int_options+["Other"])
+    if admt_electrode_int == "Other":
+        admt_electrode_int_manual = st.text_input("Type AMDT Electode spacing")
+        if admt_electrode_int_manual:
+            admt_electrode_int = admt_electrode_int_manual
+    
+    recom_bores = st.text_input("Number of Ground Marking Bore points")
+    final_recom_points = st.text_input("Number Of Finalized Bore points")
+    recom_points_order = st.text_input("Recommended Points as order as per Priority",help="For example: 1,5,3")
+    
+    yield_ = st.selectbox("Expected Yield",options=yields_options + ["Other"])
+    if yield_ == "Other":
+        yield_manual = st.text_input("Enter Expected Yield")
+        if yield_manual:
+            yield_ = yield_manual
+    
+    water_zone_depths = st.text_input("Water_Zone_Depths",help="40ft, 120ft, 180ft-240ft, 340ft, 440ft to 480ft") 
+    considerable_depths = st.text_input("Considerable Depths",help="200 - 1000 feets")
+    
+    
+    
+    
+    terrain_type = st.selectbox("Terrain Type", options=terrain_options + ["Other"])
+    if terrain_type == "Other":
+        terrain_manual = st.text_input("Enter terrain type :")
+        if terrain_manual:
+            terrain_type = terrain_manual
+   
+    geomorphic_unit = st.selectbox("Geomorphology",options=geomorphic_options + ["Other"])    
+    if geomorphic_unit == "Other":
+        geomorphic_manual = st.text_input("Enter Geophology: ")
+        if geomorphic_manual:
+            geomorphic_unit = geomorphic_manual
+   
+    weathering_depth = st.text_input("weathering_depth",value="shallow")
+    comparison_depth = st.text_input("comparison_depth",value="deeper")
+    overlying_materials = st.text_input("overlying_materials",value="soils or weathered debris")
+    
+    soil_type = st.selectbox("Soil_type",options=soil_type_options + ["Other"])
+    if soil_type == "Other":
+        soil_type_manual = st.text_input("Enter type of soil")
+        if soil_type_manual:
+            soil_type = soil_type_manual
+            
+            
+    des_soil = st.selectbox("description of soil", options = des_soil_options + ["Other"])
+    if des_soil == "Other":
+        des_soil_manual = st.text_input("Type soil description")
+        if des_soil_manual:
+            des_soil = des_soil_manual
+            
+    
+    figure_number = st.text_input("Figure_number",value="1")
+    
+    
+
+    #highest_elevation = st.text_input("Highest Elevation (in meters):")
+    #highest_elevation_num = None
+    #if highest_elevation:
+    #    try:
+    #        highest_elevation_num = float(highest_elevation)
+    #    except ValueError:
+    #        st.error("Please enter a valid number for highest elevation.")
+            
+            
+            
+    min_lat_num = None
+    if min_lat:
+        try:
+            min_lat_num = float(min_lat)
+        except ValueError:
+            st.error("Enter a valid number for min_lat.")
+            
+            
+    max_lat_num = None
+    if max_lat:
+        try:
+            max_lat_num = float(max_lat)
+        except ValueError:
+            st.error("Enter a valid number for min_lat.")
+            
+    min_lon_num = None
+    if min_lon:
+        try:
+            min_lon_num = float(min_lon)
+        except ValueError:
+            st.error("Enter a valid number for min_lon.")
+            
+    max_lon_num = None
+    if max_lon:
+        try:
+            max_lon_num = float(max_lon)
+        except ValueError:
+            st.error("Enter a valid number for max_lon.")
+    
+
+    st.write("---")
+    st.write("Image Path (default, editable):")
+
+    # Default fixed path
+    geology_img_default = r"C:\images\0.jpg"
+
+    # Text input for image path, prefilled with default
+    geology_img_path = st.text_input(
+        "Geology Image Path:",value=geology_img_default,help="You can edit this if image file path is different"
+        )
+    
+    home_page_default = r"C:\images\1.jpg"
+    home_page_path = st.text_input( "home_page_IMG",value=home_page_default)
+    
+    study_area_default = r"C:\images\2.jpg"
+    study_area_path = st.text_input("Study_Area_IMG",value=study_area_default)
+    
+    gw_prospects_default = r"C:\images\3.jpg"
+    gw_prospects_path = st.text_input("Ground water Prospects IMG",value=gw_prospects_default)
+    
+    drainage_pattern_default = r"C:\images\4.jpg"
+    drainage_pattern_path = st.text_input("Drainage_Pattern_IMG",value=drainage_pattern_default)
+    
+    lineaments_default =r"C:\images\5.jpg"
+    lineaments_path = st.text_input("Lineament IMG",value=lineaments_default)
+    
+    land_u_land_c_default = r"C:\images\6.jpg"
+    land_u_land_c_path = st.text_input("Land Use Land COver IMG",value=land_u_land_c_default)
+    
+    grad_plan_default = r"C:\images\7.jpg"
+    grad_plan_path = st.text_input("Gradient PLAN IMG",value=grad_plan_default)
+    
+    
+    res_grad_profiles_1_default =r"C:\images\8.jpg"
+    res_grad_profiles_1_path = st.text_input("Resistivity Profile: 1",value=res_grad_profiles_1_default)
+    res_grad_profiles_2_default =r"C:\images\9.jpg"
+    res_grad_profiles_2_path = st.text_input("Resistivity Profile: 2",value=res_grad_profiles_2_default)
+    res_contour_1_default =r"C:\images\10.jpg"
+    res_contour_1_path = st.text_input("Resistivity_Contour Map",value=res_contour_1_default)
+    res_contour_1_3d_default =r"C:\images\11.jpg"
+    res_contour_1_3d_path = st.text_input("Resistivity_3D IMAGE",value=res_contour_1_3d_default)
+    admt_pqwt_plan_default =r"C:\images\12.jpg"
+    
+    
+    
+    admt_pqwt_plan_path = st.text_input("ADMT_PQWT PLAN IMAGE",value=admt_pqwt_plan_default)
+    
+    admt_l_1_default = r"C:\images\13.jpg"
+    admt_l_1_path = st.text_input("ADMT_IMAGE-1",value=admt_l_1_default)
+    
+    admt_l_2_default = r"C:\images\14.jpg"
+    admt_l_2_path = st.text_input("ADMT_IMAGE-2",value=admt_l_2_default)
+    
+    admt_l_3_default = r"C:\images\15.jpg"
+    admt_l_3_path = st.text_input("ADMT_IMAGE-3",value=admt_l_3_default)
+    
+    admt_l_4_default = r"C:\images\16.jpg"
+    admt_l_4_path = st.text_input("ADMT_IMAGE-4",value=admt_l_4_default)
+    
+    admt_l_5_default = r"C:\images\17.jpg"
+    admt_l_5_path = st.text_input("ADMT_IMAGE-5",value=admt_l_5_default)
+    
+    recom_points_default = r"C:\images\18.jpg"
+    recom_points_path = st.text_input("Recommended Points IMG",value=recom_points_default)
+    
+    field_pic_default = r"C:\images\19.jpg"
+    field_pic_path = st.text_input("Field Picture",value=field_pic_default)
+    
+    pqwt_l_1_default =r"C:\images\20.jpg"
+    pqwt_l_1_path = st.text_input("PQWT IMG-1",value= pqwt_l_1_default)
+    
+    pqwt_l_2_default =r"C:\images\21.jpg"
+    pqwt_l_2_path = st.text_input("PQWT IMG-2",value= pqwt_l_2_default)
+    
+    pqwt_l_3_default =r"C:\images\22.jpg"
+    pqwt_l_3_path = st.text_input("PQWT IMG-3",value= pqwt_l_3_default)
+    
+    pqwt_l_4_default =r"C:\images\23.jpg"
+    pqwt_l_4_path = st.text_input("PQWT IMG-4",value= pqwt_l_4_default)
+    
+    pqwt_l_5_default =r"C:\images\24.jpg"
+    pqwt_l_5_path = st.text_input("PQWT IMG-5",value= pqwt_l_5_default)
+    
+    pqwt_l_6_default =r"C:\images\25.jpg"
+    pqwt_l_6_path = st.text_input("PQWT IMG-6",value= pqwt_l_6_default)
+    
+    
+    
+    if st.button("Submit"):
+        # Validation
+        if not terrain_type:
+            st.error("Terrain type is required.")
+            return
+        
+        if not geomorphic_unit:
+            st.error("Geomorphology is required")
+            return
+        if not type_of_land:
+            st.error("Type of Land is required")
+            return
+        
+        if not soil_type:
+            st.error("Type of soil is required")
+            return
+            
+        if not des_soil:
+            st.error("SOil description is required")
+            return
+            
+        if not year_rainfall:
+            st.error("year_rainfall is required")
+            return
+            
+        if not water_quality:
+            st.error("Water quality is required")
+            return
+       
+        if not grad_trav_direction:
+            st.error("Gradient line direction is required")
+            return
+            
+            
+        if not grad_station_int:
+            st.error("Grad interval is required")
+            return
+        
+        if not c1c2:
+            st.error("C1C2 spacing is required")
+        
+        if not admt_electrode_int:
+            st.error("ADMT_Electode spcaing is required")
+            
+            
+        #if highest_elevation and highest_elevation_num is None:
+        #    st.error("Highest elevation must be numeric.")
+        #    return
+            
+        if min_lat and min_lat_num is None:
+            st.error("min_lat must be numeric.")
+            return
+            
+        if max_lat and max_lat_num is None:
+            st.error("max_lat must be numeric.")
+            return
+            
+        if min_lon and min_lon_num is None:
+            st.error("min_lon must be numeric.")
+            return
+        
+        
+        if max_lon and max_lon_num is None:
+            st.error("max_lon must be numeric.")
+            return
+            
+        if figure_number is None:
+            st.error("Wrong entry")
+            return
+            
+        if overlying_materials is None:
+            st.error ("pls type overlying material")
+            return
+            
+ 
+
+        geology_img_path = geology_img_path.strip()
+        home_page_path = home_page_path.strip()
+        study_area_path = study_area_path.strip()
+        gw_prospects_path = gw_prospects_path.strip()
+        drainage_pattern_path = drainage_pattern_path.strip()
+        lineaments_path = lineaments_path.strip()
+        land_u_land_c_path = land_u_land_c_path.strip()
+        grad_plan_path = grad_plan_path.strip()
+        res_grad_profiles_1_path = res_grad_profiles_1_path.strip()
+        res_grad_profiles_2_path = res_grad_profiles_2_path.strip()
+        res_contour_1_path = res_contour_1_path.strip()
+        res_contour_1_3d_path = res_contour_1_3d_path.strip()
+        admt_pqwt_plan_path = admt_pqwt_plan_path.strip()
+        admt_l_1_path = admt_l_1_path.strip()
+        admt_l_2_path = admt_l_2_path.strip()
+        admt_l_3_path = admt_l_3_path.strip()
+        admt_l_4_path = admt_l_4_path.strip()
+        admt_l_5_path = admt_l_5_path.strip()
+        recom_points_path = recom_points_path.strip()
+        field_pic_path = field_pic_path.strip()
+        pqwt_l_1_path = pqwt_l_1_path.strip()
+        pqwt_l_2_path = pqwt_l_2_path.strip()
+        pqwt_l_3_path = pqwt_l_3_path.strip()
+        pqwt_l_4_path = pqwt_l_4_path.strip()
+        pqwt_l_5_path = pqwt_l_5_path.strip()
+        pqwt_l_6_path = pqwt_l_6_path.strip()
+        
+        data = {
+            "terrain_type": terrain_type,
+            "geomorphic_unit":geomorphic_unit,
+            "date": date_selected,
+        #    "highest_elevation": highest_elevation_num if highest_elevation else "",
+            "geology_img": geology_img_path,
+            "figure_number": figure_number,
+            "village":village,
+            "mandal": mandal,
+            "district": district,
+            "state":state,
+            "pin":pin,
+            "area":area,
+            "client_name":client_name,
+            "min_lat":min_lat,
+            "max_lat":max_lat,
+            "min_lon":min_lon,
+            "max_lon":max_lon,
+            "weathering_depth":weathering_depth,
+            "comparison_depth":comparison_depth,
+            "type_of_land":type_of_land,
+            "soil_type":soil_type,
+            "des_soil":des_soil,
+            "year_rainfall":year_rainfall,
+            "water_quality":water_quality,
+            "grad_trav_direction":grad_trav_direction,
+            "grad_station_int":grad_station_int,
+            "c1c2":c1c2,
+            "admt_electrode_int":admt_electrode_int,
+            "home_page": home_page_path,
+            "study_area":study_area_path,
+            "gw_prospects":gw_prospects_path,
+            "drainage_pattern":drainage_pattern_path,
+            "lineaments":lineaments_path,
+            "land_u_land_c": land_u_land_c_path,
+            "grad_plan":grad_plan_path,
+            "res_grad_profiles_1": res_grad_profiles_1_path,
+            "res_grad_profiles_2": res_grad_profiles_2_path,
+            "res_contour_1":res_contour_1_path,
+            "res_contour_1_3d":res_contour_1_3d_path,
+            "admt_pqwt_plan":admt_pqwt_plan_path,
+            "admt_l_1_path": admt_l_1_path,
+            "admt_l_2_path": admt_l_2_path,
+            "admt_l_3_path": admt_l_3_path,
+            "admt_l_4_path": admt_l_4_path,
+            "admt_l_5_path": admt_l_5_path,
+            "recom_points":recom_points_path,
+            "field_pic": field_pic_path,
+            "to_nearest_town":to_nearest_town,
+            "nearest_town":nearest_town,
+            "to_nearest_city":to_nearest_city,
+            "nearest_city":nearest_city,
+            "rain_fall":rain_fall,
+            "temp":temp,
+            "yield_from_prospects":yield_from_prospects,
+            "no_grad_trav": no_grad_trav,
+            "grad_trav_name":grad_trav_name,
+            "res_highs":res_highs,
+            "res_high_extends":res_high_extends,
+            "res_low":res_low,
+            "res_low_extends":res_low_extends,
+            "res_relief":res_relief,
+            "recom_bores":recom_bores,
+            "final_recom_points":final_recom_points,
+            "recom_points_order":recom_points_order,
+            "water_zone_depths":water_zone_depths,
+            "yield":yield_,
+            "considerable_depths":considerable_depths,
+            "ref_no":ref_no,
+            "res_low_trend_des": res_low_trend_des,
+            "highest_elevation":highest_elevation,
+            "lowest_elevation":lowest_elevation
+            
+            
+            
+        }
+
+        if "data_df" not in st.session_state:
+            st.session_state.data_df = pd.DataFrame(columns=list(data.keys()))
+
+        new_row = pd.DataFrame([data])
+        st.session_state.data_df = pd.concat([st.session_state.data_df, new_row], ignore_index=True)
+
+        st.success("Data saved. Image path captured.")
+
+        st.write("Current Data:")
+        st.dataframe(st.session_state.data_df)
+
+        excel_bytes = save_to_excel(st.session_state.data_df, file_path="data.xlsx")
+        
+        st.download_button(
+            label="Download Excel",
+            data=excel_bytes,
+            file_name="data.xlsx",
+            mime="application/vnd.openxmlformats-officedocument.spreadsheetml.sheet"
+        )
+
+if __name__ == "__main__":
+    main()
