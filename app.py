@@ -11,6 +11,8 @@ from io import BytesIO
 from openpyxl import load_workbook
 
 
+
+
 def save_to_excel(df: pd.DataFrame, file_path="data.xlsx") -> bytes:
     try:
         book = load_workbook(file_path)
@@ -29,9 +31,45 @@ def save_to_excel(df: pd.DataFrame, file_path="data.xlsx") -> bytes:
 
 
 
-
 def main():
+     
+    LOGO_URL = "https://bebpl.com/wp-content/uploads/2023/07/BLUE-ENERGY-lFINAL-LOGO.png"
+    
+    st.markdown(
+    f'<div style="text-align:center;"><img src="{LOGO_URL}" style="max-width:400px; height:auto;"></div>',
+    unsafe_allow_html=True
+)
     st.title("General Information")  
+    st.text("")
+    st.markdown(
+    """
+    <style>
+    .stApp {
+        background: linear-gradient(-45deg, #ee7752, #e73c7e, #23a6d5, #23d5ab);
+        background-size: 400% 400%;
+        animation: candy 12s ease infinite;
+        color: white;
+    }
+
+    @keyframes candy {
+        0% {background-position: 0% 50%;}
+        50% {background-position: 100% 50%;}
+        100% {background-position: 0% 50%;}
+    }
+    </style>
+    """,
+    unsafe_allow_html=True
+)
+
+
+
+
+
+
+
+    
+    
+    
     
     #options
     terrain_options = ["Granitic","Granitoid gneiss","gneiss","charnockite", "khondalite","Basaltic","Limestone","Laterite","Quartzite",
@@ -68,7 +106,8 @@ def main():
     yields_options = ["1 - 1.5","1.5 - 2","2 - 2.5","> 1.5","< 1.5"]
     
      
-    
+    st.markdown('<div style="background-color:#1f4e79;color:white;padding:5px;border-radius:5px">1. Basic Information</div>', unsafe_allow_html=True)
+    st.text("")
     client_name = st.text_input("client_name")
     date_selected = st.date_input("Survey_Date", value=date.today())
     ref_no = st.text_input("Project Name/Reference",help="SN/12/2025")
@@ -89,7 +128,8 @@ def main():
         if type_of_land_manual:
             type_of_land = type_of_land_manual
     
-    
+    st.markdown('<div style="background-color:#1f4e79;color:white;padding:5px;border-radius:5px">2. GEOGRAPHICAL</div>', unsafe_allow_html=True)
+    st.text("")
     min_lat = st.text_input("min_lat")
     max_lat = st.text_input("max_lat")
     min_lon = st.text_input("min_lon")
@@ -118,7 +158,8 @@ def main():
             water_quality = water_quality_manual
     
     
-    
+    st.markdown('<div style="background-color:#1f4e79;color:white;padding:5px;border-radius:5px">3. GEOPHYSICAL</div>', unsafe_allow_html=True)
+    st.text("")
     no_grad_trav = st.text_input("Number of Grad Traverses")
     grad_trav_direction = st.selectbox("Gradient Line Direction",options=grad_trav_direction_options + ["Other"])
     
@@ -152,7 +193,8 @@ def main():
         admt_electrode_int_manual = st.text_input("Type AMDT Electode spacing")
         if admt_electrode_int_manual:
             admt_electrode_int = admt_electrode_int_manual
-    
+    st.markdown('<div style="background-color:#1f4e79;color:white;padding:5px;border-radius:5px">4. RECCOMENDATIONS</div>', unsafe_allow_html=True)
+    st.text("")
     recom_bores = st.text_input("Number of Ground Marking Bore points")
     final_recom_points = st.text_input("Number Of Finalized Bore points")
     recom_points_order = st.text_input("Recommended Points as order as per Priority",help="For example: 1,5,3")
@@ -168,7 +210,8 @@ def main():
     
     
     
-    
+    st.markdown('<div style="background-color:#1f4e79;color:white;padding:5px;border-radius:5px">5. GEOLOGY & MORPHOLOGY</div>', unsafe_allow_html=True)
+    st.text("")
     terrain_type = st.selectbox("Terrain Type", options=terrain_options + ["Other"])
     if terrain_type == "Other":
         terrain_manual = st.text_input("Enter terrain type :")
@@ -245,7 +288,8 @@ def main():
 
     st.write("---")
     st.write("Image Path (default, editable):")
-
+    st.markdown('<div style="background-color:#1f4e79;color:white;padding:5px;border-radius:5px">6. IMAGE PATHS</div>', unsafe_allow_html=True)
+    st.text("")
     # Default fixed path
     geology_img_default = r"C:\images\0.jpg"
 
