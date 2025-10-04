@@ -39,7 +39,7 @@ def main():
     f'<div style="text-align:center;"><img src="{LOGO_URL}" style="max-width:400px; height:auto;"></div>',
     unsafe_allow_html=True
 )
-    st.title("General Information")  
+    st.title("DATA FORM-GROUNDWATER SURVEY-REPORT")  
     st.text("")
     st.markdown(
     """
@@ -48,7 +48,7 @@ def main():
         background: linear-gradient(-45deg, #ee7752, #e73c7e, #23a6d5, #23d5ab);
         background-size: 400% 400%;
         animation: candy 12s ease infinite;
-        color: white;
+        color: black;
     }
 
     @keyframes candy {
@@ -106,23 +106,24 @@ def main():
     yields_options = ["1 - 1.5","1.5 - 2","2 - 2.5","> 1.5","< 1.5"]
     
      
-    st.markdown('<div style="background-color:#1f4e79;color:white;padding:5px;border-radius:5px">1. Basic Information</div>', unsafe_allow_html=True)
+    st.markdown('<div style="background-color:#1f4e79;color:white;padding:5px;border-radius:5px">1. General Information</div>', unsafe_allow_html=True)
     st.text("")
-    client_name = st.text_input("client_name")
+    client_name = st.text_input("client_name",placeholder="Rudra Venkatesh")
     date_selected = st.date_input("Survey_Date", value=date.today())
-    ref_no = st.text_input("Project Name/Reference",help="SN/12/2025")
+    date_selected = date_selected.strftime("%d-%m-%Y")
+    ref_no = st.text_input("Project Name/Reference",help="SN/12/2025",placeholder="SN/12/2025")
     village = st.text_input("village")
     mandal = st.text_input("mandal")
     district = st.text_input("district")
     state = st.text_input("state")
     pin = st.text_input("Pincode")
-    area = st.text_input("area",help="15 Acres")
-    nearest_town = st.text_input("Type Nearest Town")
-    to_nearest_town = st.text_input("Distcne To Nearest Town")
-    nearest_city = st.text_input("Type Nearest City")
-    to_nearest_city = st.text_input("Distcne To Nearest City")
+    area = st.text_input("area",help="survey area in terms of Acres",value="15 Acres")
+    nearest_town = st.text_input("Type Nearest Town",help="Enter Nearest Town to the survey area")
+    to_nearest_town = st.text_input("Distcne To Nearest Town",help="in terms of km",value="10 km" )
+    nearest_city = st.text_input("Type Nearest City",help="Enter Nearest City to the survey area")
+    to_nearest_city = st.text_input("Distcne To Nearest City",help="in terms of km",value="80 km" )
     
-    type_of_land = st.selectbox("Type_Of_Land",options=type_of_land_options + ["Other"])
+    type_of_land = st.selectbox("Type_Of_Land",options=type_of_land_options + ["Other"],help="select from dropdown list")
     if type_of_land == "Other":
         type_of_land_manual = st.text_input("Enter type of land: ")
         if type_of_land_manual:
@@ -130,28 +131,28 @@ def main():
     
     st.markdown('<div style="background-color:#1f4e79;color:white;padding:5px;border-radius:5px">2. GEOGRAPHICAL</div>', unsafe_allow_html=True)
     st.text("")
-    min_lat = st.text_input("min_lat")
-    max_lat = st.text_input("max_lat")
-    min_lon = st.text_input("min_lon")
-    max_lon = st.text_input("max_lon")
-    highest_elevation = st.text_input("Highest Elevation",help="330m in the NW corner")
-    lowest_elevation = st.text_input("Lowest Elevation",help= "250m in NS Corner")
+    min_lat = st.text_input("min_lat",placeholder="17.24574",help="Enter Minimum Latitude of the survey area")
+    max_lat = st.text_input("max_lat",placeholder="17.35574",help="Enter Maximum Latitude of the survey area")
+    min_lon = st.text_input("min_lon",placeholder="79.24574",help="Enter Minimum Longitude of the survey area")
+    max_lon = st.text_input("max_lon",placeholder="79.35574",help="Enter Maximum Longitude of the survey area")
+    highest_elevation = st.text_input("Highest Elevation",help="330m in the NW corner",placeholder="330m in the NW corner")
+    lowest_elevation = st.text_input("Lowest Elevation",help= "250m in NS Corner",placeholder="250m in NS Corner")
     
     
     rain_fall = st.text_input("Rain fall",value="600 mm")
     
     
-    year_rainfall = st.selectbox("Select Year",options=year_rainfall_options +["Other"])    
+    year_rainfall = st.selectbox("Select Year",options=year_rainfall_options +["Other"],help="Select Year of Rain-Fall")    
     if year_rainfall == "Other":
         year_rainfall_manual = st.text_input("Type year_range")
         if year_rainfall_manual:
             year_rainfall = year_rainfall_manual
             
-    temp = st.text_input("Temperature",value="15 deg. C – 45 deg. C")
+    temp = st.text_input("Temperature",value="15 deg. C – 45 deg. C",help="Temperature in the survey area")
     
     yield_from_prospects = st.text_input("Yield From Prospects", value="30 to 80 m and >80m deep well and 30 to 50 and 100 to 200 LPM yield")
     
-    water_quality = st.selectbox("Water Quality",options= water_quality_options + ["Other"])
+    water_quality = st.selectbox("Water Quality",options= water_quality_options + ["Other"],help="select the water quality from the dropdown/type by selection other")
     if water_quality == "Other":
         water_quality_manual = st.text_input("Type water quality ")
         if water_quality_manual:
@@ -160,65 +161,66 @@ def main():
     
     st.markdown('<div style="background-color:#1f4e79;color:white;padding:5px;border-radius:5px">3. GEOPHYSICAL</div>', unsafe_allow_html=True)
     st.text("")
-    no_grad_trav = st.text_input("Number of Grad Traverses")
-    grad_trav_direction = st.selectbox("Gradient Line Direction",options=grad_trav_direction_options + ["Other"])
+    no_grad_trav = st.text_input("Number of Grad Traverses",help = "Howmany Gradient survey lines?",placeholder=4)
+    grad_trav_direction = st.selectbox("Gradient Line Direction",options=grad_trav_direction_options + ["Other"],help="select the gradient survey lines direction from the dropdown list")
     
     if grad_trav_direction == 'Other':
         grad_trav_direction_manual = st.text_input("Type Gradient Line Direction")
         if grad_trav_direction_manual:
             grad_trav_direction = grad_trav_direction_manual
             
-    grad_trav_name = st.text_input("Name of Grad Traverses",help="Trav-0, N50, N90 and N100 and S50, S100")
+    grad_trav_name = st.text_input("Name of Grad Traverses",help="Trav-0, N50, N90 and N100 and S50, S100",placeholder="L0, N50, N100 and S50 and S100")
     
-    grad_station_int = st.selectbox("Grad_station_interval",options=grad_station_int_options +  ["Other"]) 
+    grad_station_int = st.selectbox("Grad_station_interval",options=grad_station_int_options +  ["Other"],help="P1P2 distance in gradient survey, in meters") 
     if grad_station_int == "Other":
         grad_station_int_manual = st.text_input("Eter gradient station interval")
         if grad_station_int_manual:
             grad_station_int = grad_station_int_manual
     
-    c1c2 = st.selectbox("C1C2",options=c1c2_options+["Other"])
+    c1c2 = st.selectbox("C1C2",options=c1c2_options+["Other"],help= "C1C2 distance in gradient survey, in meters")
     if c1c2 == "Other":
         c1c2_manual =st.text_input("Enter c1c2 spacing")
         if c1c2_manual:
             c1c2 = c1c2_manual
-    res_highs = st.text_input("Risistivity High Range",help="1200-800")
-    res_high_extends = st.text_input("High Resisvity Extends",value="North to South")
+    res_highs = st.text_input("Risistivity High Range",help="1200-800",value="1200-800")
+    res_high_extends = st.text_input("High Resisvity Extends",value="North to South",help="write in which direction high resistivity trend is moving")
     res_low = st.text_input("Risistivity Low Range",value="300-150")
-    res_low_extends = st.text_input("Low Resisvity Extends",value="South west and Nort East parts")
-    res_low_trend_des = st.text_input("Low Resistivity Trends Description",help="in the southwest and northwest part as well in northeast region may reflects  presence of  fracture system in the study area")
-    res_relief = st.text_input("Resistivity- Relief value")
+    res_low_extends = st.text_input("Low Resisvity Extends",value="South west and Nort East parts",help="write in which direction low resistivity trend is moving")
+    #res_low_trend_des = st.text_input("Low Resistivity Trends Description",help="in the southwest and northwest part as well in northeast region may reflects  presence of  fracture system in the study area")
+    res_low_trend_des = st.text_area("Low Resistivity Trends Description", height=100,
+                                      value = "in the southwest and northwest part as well in northeast region may reflects  presence of  fracture system in the study area",help="how this this low resistivity in tems of directions, reflects the fracture systems for groundwater prospects" )
+    res_relief = st.text_input("Resistivity- Relief value",placeholder=254)
     
-    admt_electrode_int = st.selectbox("ADMT_Electode Spacing",options=admt_electrode_int_options+["Other"])
+    admt_electrode_int = st.selectbox("ADMT_Electode Spacing",options=admt_electrode_int_options+["Other"],help="select the distance between each electrode")
     if admt_electrode_int == "Other":
         admt_electrode_int_manual = st.text_input("Type AMDT Electode spacing")
         if admt_electrode_int_manual:
             admt_electrode_int = admt_electrode_int_manual
     st.markdown('<div style="background-color:#1f4e79;color:white;padding:5px;border-radius:5px">4. RECCOMENDATIONS</div>', unsafe_allow_html=True)
     st.text("")
-    recom_bores = st.text_input("Number of Ground Marking Bore points")
-    final_recom_points = st.text_input("Number Of Finalized Bore points")
-    recom_points_order = st.text_input("Recommended Points as order as per Priority",help="For example: 1,5,3")
+    recom_bores = st.text_input("Number of Ground Marking Bore points",placeholder="6",help="howmany points marked in the field/site")
+    final_recom_points = st.text_input("Number Of Finalized Bore points",placeholder="3",help="howmany points finalized after analysis in the office")
+    recom_points_order = st.text_input("Recommended Points as order as per Priority",help="For example: 2,5,3",placeholder="2,5,3")
     
-    yield_ = st.selectbox("Expected Yield",options=yields_options + ["Other"])
+    yield_ = st.selectbox("Expected Yield",options=yields_options + ["Other"],help="select the expected yield from the dropdown list")
     if yield_ == "Other":
         yield_manual = st.text_input("Enter Expected Yield")
         if yield_manual:
             yield_ = yield_manual
     
-    water_zone_depths = st.text_input("Water_Zone_Depths",help="40ft, 120ft, 180ft-240ft, 340ft, 440ft to 480ft") 
-    considerable_depths = st.text_input("Considerable Depths",help="200 - 1000 feets")
+    water_zone_depths = st.text_input("Water_Zone_Depths",help="40ft, 120ft, 180ft-240ft, 340ft, 440ft to 480ft",placeholder="40ft, 120ft, 180ft-240ft, 340ft, 440ft to 480ft") 
+    considerable_depths = st.text_input("Considerable Depths",help="200 - 1000 feets",placeholder="200 - 1000 feets")
     
-    
-    
+        
     st.markdown('<div style="background-color:#1f4e79;color:white;padding:5px;border-radius:5px">5. GEOLOGY & MORPHOLOGY</div>', unsafe_allow_html=True)
     st.text("")
-    terrain_type = st.selectbox("Terrain Type", options=terrain_options + ["Other"])
+    terrain_type = st.selectbox("Terrain Type", options=terrain_options + ["Other"],help="surface geology of survey area; for example granite/basalt...")
     if terrain_type == "Other":
         terrain_manual = st.text_input("Enter terrain type :")
         if terrain_manual:
             terrain_type = terrain_manual
    
-    geomorphic_unit = st.selectbox("Geomorphology",options=geomorphic_options + ["Other"])    
+    geomorphic_unit = st.selectbox("Geomorphology",options=geomorphic_options + ["Other"],help="Geomorphology of the survey area")    
     if geomorphic_unit == "Other":
         geomorphic_manual = st.text_input("Enter Geophology: ")
         if geomorphic_manual:
@@ -226,23 +228,23 @@ def main():
    
     weathering_depth = st.text_input("weathering_depth",value="shallow")
     comparison_depth = st.text_input("comparison_depth",value="deeper")
-    overlying_materials = st.text_input("overlying_materials",value="soils or weathered debris")
+    overlying_materials = st.text_input("overlying_materials",value="soils or weathered debris",help= "during survey, what kind of material is there on the surface")
     
-    soil_type = st.selectbox("Soil_type",options=soil_type_options + ["Other"])
+    soil_type = st.selectbox("Soil_type",options=soil_type_options + ["Other"],help="What type of soils observed in the survey area")
     if soil_type == "Other":
         soil_type_manual = st.text_input("Enter type of soil")
         if soil_type_manual:
             soil_type = soil_type_manual
             
             
-    des_soil = st.selectbox("description of soil", options = des_soil_options + ["Other"])
+    des_soil = st.selectbox("description of soil", options = des_soil_options + ["Other"],help="select the identified soils description/descibe in the similar way given...")
     if des_soil == "Other":
         des_soil_manual = st.text_input("Type soil description")
         if des_soil_manual:
             des_soil = des_soil_manual
             
     
-    figure_number = st.text_input("Figure_number",value="1")
+    figure_number = st.text_input("Figure_number",value="1", help="No need to change this keep it as it is...")
     
     
 
@@ -287,7 +289,7 @@ def main():
     
 
     st.write("---")
-    st.write("Image Path (default, editable):")
+    st.write("Image Path : default")
     st.markdown('<div style="background-color:#1f4e79;color:white;padding:5px;border-radius:5px">6. IMAGE PATHS</div>', unsafe_allow_html=True)
     st.text("")
     # Default fixed path
