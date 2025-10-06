@@ -158,6 +158,9 @@ def main():
         if water_quality_manual:
             water_quality = water_quality_manual
     
+    st.markdown('<div style="background-color:#1f4e79;color:white;padding:5px;border-radius:5px">3. Hydro-Geological</div>', unsafe_allow_html=True)
+    st.text("")
+    h_geo = st.text_area("Describe hydrogeology and existing bores", height=200,help="this description directly will be inserted as paragrah in the report")
     
     st.markdown('<div style="background-color:#1f4e79;color:white;padding:5px;border-radius:5px">3. GEOPHYSICAL</div>', unsafe_allow_html=True)
     st.text("")
@@ -300,6 +303,7 @@ def main():
         "Geology Image Path:",value=geology_img_default,help="You can edit this if image file path is different"
         )
     
+    
     home_page_default = r"C:\images\1.jpg"
     home_page_path = st.text_input( "home_page_IMG",value=home_page_default)
     
@@ -317,6 +321,9 @@ def main():
     
     land_u_land_c_default = r"C:\images\6.jpg"
     land_u_land_c_path = st.text_input("Land Use Land COver IMG",value=land_u_land_c_default)
+    
+    existing_bores_default = r"C:\images\-1.jpg"
+    existing_bores_path = st.text_input("Existing_Bores_IMG",value=existing_bores_default)
     
     grad_plan_default = r"C:\images\7.jpg"
     grad_plan_path = st.text_input("Gradient PLAN IMG",value=grad_plan_default)
@@ -351,6 +358,51 @@ def main():
     admt_l_5_default = r"C:\images\17.jpg"
     admt_l_5_path = st.text_input("ADMT_IMAGE-5",value=admt_l_5_default)
     
+    admt_l_6_default = r"C:\images\35.jpg"
+    admt_l_6_path = st.text_input("ADMT_IMAGE-6",value=admt_l_6_default)
+    
+    admt_l_7_default = r"C:\images\36.jpg"
+    admt_l_7_path = st.text_input("ADMT_IMAGE-7",value=admt_l_7_default)
+    
+    admt_l_8_default = r"C:\images\37.jpg"
+    admt_l_8_path = st.text_input("ADMT_IMAGE-8",value=admt_l_8_default)
+    
+    admt_l_9_default = r"C:\images\38.jpg"
+    admt_l_9_path = st.text_input("ADMT_IMAGE-9",value=admt_l_9_default)
+    
+    admt_l_10_default = r"C:\images\39.jpg"
+    admt_l_10_path = st.text_input("ADMT_IMAGE-10",value=admt_l_10_default)
+    
+    admt_l_11_default = r"C:\images\40.jpg"
+    admt_l_11_path = st.text_input("ADMT_IMAGE-11",value=admt_l_11_default)
+    
+    admt_l_12_default = r"C:\images\41.jpg"
+    admt_l_12_path = st.text_input("ADMT_IMAGE-12",value=admt_l_12_default)
+    
+    admt_l_13_default = r"C:\images\42.jpg"
+    admt_l_13_path = st.text_input("ADMT_IMAGE-13",value=admt_l_13_default)
+    
+    admt_l_14_default = r"C:\images\43.jpg"
+    admt_l_14_path = st.text_input("ADMT_IMAGE-14",value=admt_l_14_default)
+    
+    admt_l_15_default = r"C:\images\44.jpg"
+    admt_l_15_path = st.text_input("ADMT_IMAGE-15",value=admt_l_15_default)
+    
+    admt_l_16_default = r"C:\images\45.jpg"
+    admt_l_16_path = st.text_input("ADMT_IMAGE-16",value=admt_l_16_default)
+    
+    admt_l_17_default = r"C:\images\46.jpg"
+    admt_l_17_path = st.text_input("ADMT_IMAGE-17",value=admt_l_17_default)
+    
+    admt_l_18_default = r"C:\images\47.jpg"
+    admt_l_18_path = st.text_input("ADMT_IMAGE-18",value=admt_l_18_default)
+    
+    admt_l_19_default = r"C:\images\48.jpg"
+    admt_l_19_path = st.text_input("ADMT_IMAGE-19",value=admt_l_19_default)
+    
+    admt_l_20_default = r"C:\images\49.jpg"
+    admt_l_20_path = st.text_input("ADMT_IMAGE-20",value=admt_l_20_default)
+    
     recom_points_default = r"C:\images\18.jpg"
     recom_points_path = st.text_input("Recommended Points IMG",value=recom_points_default)
     
@@ -375,6 +427,32 @@ def main():
     pqwt_l_6_default =r"C:\images\25.jpg"
     pqwt_l_6_path = st.text_input("PQWT IMG-6",value= pqwt_l_6_default)
     
+    pqwt_l_7_default =r"C:\images\26.jpg"
+    pqwt_l_7_path = st.text_input("PQWT IMG-7",value= pqwt_l_7_default)
+    
+    pqwt_l_8_default =r"C:\images\27.jpg"
+    pqwt_l_8_path = st.text_input("PQWT IMG-8",value= pqwt_l_8_default)
+    
+    pqwt_l_9_default =r"C:\images\28.jpg"
+    pqwt_l_9_path = st.text_input("PQWT IMG-9",value= pqwt_l_9_default)
+    
+    pqwt_l_10_default =r"C:\images\29.jpg"
+    pqwt_l_10_path = st.text_input("PQWT IMG-10",value= pqwt_l_10_default)
+    
+    pqwt_l_11_default =r"C:\images\30.jpg"
+    pqwt_l_11_path = st.text_input("PQWT IMG-11",value= pqwt_l_11_default)
+    
+    pqwt_l_12_default =r"C:\images\31.jpg"
+    pqwt_l_12_path = st.text_input("PQWT IMG-12",value= pqwt_l_12_default)
+    
+    pqwt_l_13_default =r"C:\images\32.jpg"
+    pqwt_l_13_path = st.text_input("PQWT IMG-13",value= pqwt_l_13_default)
+    
+    pqwt_l_14_default =r"C:\images\33.jpg"
+    pqwt_l_14_path = st.text_input("PQWT IMG-14",value= pqwt_l_14_default)
+    
+    pqwt_l_15_default =r"C:\images\34.jpg"
+    pqwt_l_15_path = st.text_input("PQWT IMG-15",value= pqwt_l_15_default)
     
     
     if st.button("Submit"):
@@ -460,6 +538,7 @@ def main():
         drainage_pattern_path = drainage_pattern_path.strip()
         lineaments_path = lineaments_path.strip()
         land_u_land_c_path = land_u_land_c_path.strip()
+        existing_bores_path = existing_bores_path.strip()
         grad_plan_path = grad_plan_path.strip()
         res_grad_profiles_1_path = res_grad_profiles_1_path.strip()
         res_grad_profiles_2_path = res_grad_profiles_2_path.strip()
@@ -471,6 +550,21 @@ def main():
         admt_l_3_path = admt_l_3_path.strip()
         admt_l_4_path = admt_l_4_path.strip()
         admt_l_5_path = admt_l_5_path.strip()
+        admt_l_6_path = admt_l_6_path.strip()
+        admt_l_7_path = admt_l_7_path.strip()
+        admt_l_8_path = admt_l_8_path.strip()
+        admt_l_9_path = admt_l_9_path.strip()
+        admt_l_10_path = admt_l_10_path.strip()
+        admt_l_11_path = admt_l_11_path.strip()
+        admt_l_12_path = admt_l_12_path.strip()
+        admt_l_13_path = admt_l_13_path.strip()
+        admt_l_14_path = admt_l_14_path.strip()
+        admt_l_15_path = admt_l_15_path.strip()
+        admt_l_16_path = admt_l_16_path.strip()
+        admt_l_17_path = admt_l_17_path.strip()
+        admt_l_18_path = admt_l_18_path.strip()
+        admt_l_19_path = admt_l_19_path.strip()
+        admt_l_20_path = admt_l_20_path.strip()
         recom_points_path = recom_points_path.strip()
         field_pic_path = field_pic_path.strip()
         pqwt_l_1_path = pqwt_l_1_path.strip()
@@ -479,6 +573,15 @@ def main():
         pqwt_l_4_path = pqwt_l_4_path.strip()
         pqwt_l_5_path = pqwt_l_5_path.strip()
         pqwt_l_6_path = pqwt_l_6_path.strip()
+        pqwt_l_7_path = pqwt_l_7_path.strip()
+        pqwt_l_8_path = pqwt_l_8_path.strip()
+        pqwt_l_9_path = pqwt_l_9_path.strip()
+        pqwt_l_10_path = pqwt_l_10_path.strip()
+        pqwt_l_11_path = pqwt_l_11_path.strip()
+        pqwt_l_12_path = pqwt_l_12_path.strip()
+        pqwt_l_13_path = pqwt_l_13_path.strip()
+        pqwt_l_14_path = pqwt_l_14_path.strip()
+        pqwt_l_15_path = pqwt_l_15_path.strip()
         
         data = {
             "terrain_type": terrain_type,
@@ -515,17 +618,33 @@ def main():
             "drainage_pattern":drainage_pattern_path,
             "lineaments":lineaments_path,
             "land_u_land_c": land_u_land_c_path,
+            "existing_bores": existing_bores_path,
             "grad_plan":grad_plan_path,
             "res_grad_profiles_1": res_grad_profiles_1_path,
             "res_grad_profiles_2": res_grad_profiles_2_path,
             "res_contour_1":res_contour_1_path,
             "res_contour_1_3d":res_contour_1_3d_path,
             "admt_pqwt_plan":admt_pqwt_plan_path,
-            "admt_l_1_path": admt_l_1_path,
-            "admt_l_2_path": admt_l_2_path,
-            "admt_l_3_path": admt_l_3_path,
-            "admt_l_4_path": admt_l_4_path,
-            "admt_l_5_path": admt_l_5_path,
+            "admt_l_1": admt_l_1_path,
+            "admt_l_2": admt_l_2_path,
+            "admt_l_3": admt_l_3_path,
+            "admt_l_4": admt_l_4_path,
+            "admt_l_5": admt_l_5_path,
+            "admt_l_6": admt_l_6_path,
+            "admt_l_7": admt_l_7_path,
+            "admt_l_8": admt_l_8_path,
+            "admt_l_9": admt_l_9_path,
+            "admt_l_10": admt_l_10_path,
+            "admt_l_11": admt_l_11_path,
+            "admt_l_12": admt_l_12_path,
+            "admt_l_13": admt_l_13_path,
+            "admt_l_14": admt_l_14_path,
+            "admt_l_15": admt_l_15_path,
+            "admt_l_16": admt_l_16_path,
+            "admt_l_17": admt_l_17_path,
+            "admt_l_18": admt_l_18_path,
+            "admt_l_19": admt_l_19_path,
+            "admt_l_20": admt_l_20_path,
             "recom_points":recom_points_path,
             "field_pic": field_pic_path,
             "to_nearest_town":to_nearest_town,
@@ -551,9 +670,23 @@ def main():
             "ref_no":ref_no,
             "res_low_trend_des": res_low_trend_des,
             "highest_elevation":highest_elevation,
-            "lowest_elevation":lowest_elevation
-            
-            
+            "lowest_elevation":lowest_elevation,
+            "pqwt_l_1": pqwt_l_1_path,
+            "pqwt_l_2": pqwt_l_2_path,
+            "pqwt_l_3": pqwt_l_3_path,
+            "pqwt_l_4": pqwt_l_4_path,
+            "pqwt_l_5": pqwt_l_5_path,
+            "pqwt_l_6": pqwt_l_6_path,
+            "pqwt_l_7": pqwt_l_7_path,
+            "pqwt_l_8": pqwt_l_8_path,
+            "pqwt_l_9": pqwt_l_9_path,
+            "pqwt_l_10": pqwt_l_10_path,
+            "pqwt_l_11": pqwt_l_11_path,
+            "pqwt_l_12": pqwt_l_12_path,
+            "pqwt_l_13": pqwt_l_13_path,
+            "pqwt_l_14": pqwt_l_14_path,
+            "pqwt_l_15": pqwt_l_15_path,
+            "hydrogeology": h_geo
             
         }
 
