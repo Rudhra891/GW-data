@@ -10,7 +10,69 @@ import pandas as pd
 from io import BytesIO
 from openpyxl import load_workbook
 
+image_url1 = "https://www.egr.msu.edu/hydrology/Home/hydro/Hydro_cycle_02.gif"
+image_url2 = "https://media1.giphy.com/media/v1.Y2lkPTc5MGI3NjExdHN5MHNxdzNmYmlvZTd1NDdraGdqamJtODNpcWxlc2gyMHV6d3plcCZlcD12MV9pbnRlcm5hbF9naWZfYnlfaWQmY3Q9Zw/Bdlzpicqzu5SmLswrH/giphy.gif"
+image_url3 ="https://i.makeagif.com/media/11-10-2019/8XfJT6.gif"
 
+html = f"""
+<div style="display: flex; flex-direction: column; align-items: center;">
+  <img src="{image_url1}" alt="Hydrological Cycle" style="width: 120%; margin-bottom: 40px;" />
+  <img src="{image_url2}" alt="Geoph Data" style="width: 120%; margin-bottom: 40px;" />
+  <img src="{image_url3}" alt="Geoph Data" style="width: 120%;" />
+  
+</div>
+"""
+
+st.sidebar.markdown(html, unsafe_allow_html=True)
+
+
+
+st.markdown("""
+<style>
+body, .block-container {
+    margin: 0;
+    padding: 0;
+}
+.header {
+    position: fixed; top: 0; left: 0; width: 100%;
+    height: 100px;
+    background: linear-gradient(90deg,#FFE53B, #FFCE00);
+    color: white;
+    display: flex; align-items: center; justify-content: space-between;
+    padding: 10px 40px;
+    box-sizing: border-box; z-index: 1000;
+    font-size: 1.5rem; font-weight: bold;
+}
+.footer {
+    position: fixed; bottom: 0.5; left: 3; width: 50%;
+    height: 30px; /* Reduced height */
+    background: linear-gradient(90deg, .#FFE53B, #FFCE00);
+    color: white; display: flex; align-items: center; justify-content: center;
+    padding: 10px 20px; box-sizing: b..order-box; z-index: 1000;
+    font-size: 0.5rem;
+}
+.content {
+    padding-top: 120px; /* Increased top padding */
+    padding-bottom: 80px; /* Increased bottom padding */
+}
+</style>
+
+<div class="header">
+    🌟 Geophysical App
+    <nav>
+        <a href="#" style="color: white; text-decoration: none; margin: 0 15px;">Home</a>
+        <a href="#" style="color: white; text-decoration: none; margin: 0 15px;">About</a>
+        <a href="#" style="color: white; text-decoration: none; margin: 0 15px;">Contact</a>
+    </nav>
+</div>
+
+<div class="footer">© 2019 Bebpl | All Rights Reserved</div>
+
+<div class="content">
+""", unsafe_allow_html=True)
+
+
+st.markdown("</div>", unsafe_allow_html=True)
 
 
 def save_to_excel(df: pd.DataFrame, file_path="data.xlsx") -> bytes:
@@ -105,25 +167,49 @@ def main():
     admt_electrode_int_options = ["0.5m","1m","1.5m","2m","2.5m","3m","3.5m","4m","4.5m","5m"]
     yields_options = ["1 - 1.5","1.5 - 2","2 - 2.5","> 1.5","< 1.5"]
     
+    st.markdown(
+    """
+    <style>
+    /* Style for input label text (widget labels) */
+    .stTextInput > label, 
+    .stNumberInput > label,
+    .stSlider > label,
+    .stSelectbox > label,
+    .stRadio > label,
+    .stCheckbox > label {
+        font-size: 40px !important;
+        font-weight: bold !important;
+        color: black !important;
+    }
+
+    /* Style the input box user text (the typed content) */
+    input, textarea {
+        font-size: 20px !important;
+    }
+    </style>
+    """,
+    unsafe_allow_html=True,
+)
+    
      
     st.markdown('<div style="background-color:#1f4e79;color:white;padding:5px;border-radius:5px">1. General Information</div>', unsafe_allow_html=True)
     st.text("")
-    client_name = st.text_input("client_name",placeholder="Rudra Venkatesh")
-    date_selected = st.date_input("Survey_Date", value=date.today())
+    client_name = st.text_input("CLIENT NAME",placeholder="Rudra Venkatesh")
+    date_selected = st.date_input("SURVEY DATE", value=date.today())
     date_selected = date_selected.strftime("%d-%m-%Y")
     ref_no = st.text_input("Project Name/Reference",help="SN/12/2025",placeholder="SN/12/2025")
-    village = st.text_input("village")
-    mandal = st.text_input("mandal")
-    district = st.text_input("district")
-    state = st.text_input("state")
-    pin = st.text_input("Pincode")
-    area = st.text_input("area",help="survey area in terms of Acres",value="15 Acres")
-    nearest_town = st.text_input("Type Nearest Town",help="Enter Nearest Town to the survey area")
+    village = st.text_input("VILLAGE")
+    mandal = st.text_input("MANDAL")
+    district = st.text_input("DISTRICT")
+    state = st.text_input("STATE")
+    pin = st.text_input("PINCODE")
+    area = st.text_input("AREA",help="survey area in terms of Acres/Sq Yards/Sq Feets",value="15 Acres")
+    nearest_town = st.text_input("Nearest Town",help="Enter Nearest Town to the survey area")
     to_nearest_town = st.text_input("Distcne To Nearest Town",help="in terms of km",value="10 km" )
-    nearest_city = st.text_input("Type Nearest City",help="Enter Nearest City to the survey area")
+    nearest_city = st.text_input("Nearest City",help="Enter Nearest City to the survey area")
     to_nearest_city = st.text_input("Distcne To Nearest City",help="in terms of km",value="80 km" )
     
-    type_of_land = st.selectbox("Type_Of_Land",options=type_of_land_options + ["Other"],help="select from dropdown list")
+    type_of_land = st.selectbox("Type of Land",options=type_of_land_options + ["Other"],help="select from dropdown list")
     if type_of_land == "Other":
         type_of_land_manual = st.text_input("Enter type of land: ")
         if type_of_land_manual:
@@ -131,10 +217,10 @@ def main():
     
     st.markdown('<div style="background-color:#1f4e79;color:white;padding:5px;border-radius:5px">2. GEOGRAPHICAL</div>', unsafe_allow_html=True)
     st.text("")
-    min_lat = st.text_input("min_lat",placeholder="17.24574",help="Enter Minimum Latitude of the survey area")
-    max_lat = st.text_input("max_lat",placeholder="17.35574",help="Enter Maximum Latitude of the survey area")
-    min_lon = st.text_input("min_lon",placeholder="79.24574",help="Enter Minimum Longitude of the survey area")
-    max_lon = st.text_input("max_lon",placeholder="79.35574",help="Enter Maximum Longitude of the survey area")
+    min_lat = st.text_input("Minimum Latitude",placeholder="17.24574",help="Enter Minimum Latitude of the survey area")
+    max_lat = st.text_input("Maximum Latitude",placeholder="17.35574",help="Enter Maximum Latitude of the survey area")
+    min_lon = st.text_input("Minimum Longitude",placeholder="79.24574",help="Enter Minimum Longitude of the survey area")
+    max_lon = st.text_input("Maximum Longitude",placeholder="79.35574",help="Enter Maximum Longitude of the survey area")
     highest_elevation = st.text_input("Highest Elevation",help="330m in the NW corner",placeholder="330m in the NW corner")
     lowest_elevation = st.text_input("Lowest Elevation",help= "250m in NS Corner",placeholder="250m in NS Corner")
     
@@ -142,7 +228,7 @@ def main():
     rain_fall = st.text_input("Rain fall",value="600 mm")
     
     
-    year_rainfall = st.selectbox("Select Year",options=year_rainfall_options +["Other"],help="Select Year of Rain-Fall")    
+    year_rainfall = st.selectbox("Select Year of Rainfall",options=year_rainfall_options +["Other"],help="Select Year of Rain-Fall")    
     if year_rainfall == "Other":
         year_rainfall_manual = st.text_input("Type year_range")
         if year_rainfall_manual:
@@ -162,7 +248,7 @@ def main():
     st.text("")
     h_geo = st.text_area("Describe hydrogeology and existing bores", height=200,help="this description directly will be inserted as paragrah in the report")
     
-    st.markdown('<div style="background-color:#1f4e79;color:white;padding:5px;border-radius:5px">3. GEOPHYSICAL</div>', unsafe_allow_html=True)
+    st.markdown('<div style="background-color:#1f4e79;color:white;padding:5px;border-radius:5px">4. GEOPHYSICAL</div>', unsafe_allow_html=True)
     st.text("")
     no_grad_trav = st.text_input("Number of Grad Traverses",help = "Howmany Gradient survey lines?",placeholder=4)
     grad_trav_direction = st.selectbox("Gradient Line Direction",options=grad_trav_direction_options + ["Other"],help="select the gradient survey lines direction from the dropdown list")
@@ -174,7 +260,7 @@ def main():
             
     grad_trav_name = st.text_input("Name of Grad Traverses",help="Trav-0, N50, N90 and N100 and S50, S100",placeholder="L0, N50, N100 and S50 and S100")
     
-    grad_station_int = st.selectbox("Grad_station_interval",options=grad_station_int_options +  ["Other"],help="P1P2 distance in gradient survey, in meters") 
+    grad_station_int = st.selectbox("P1P2",options=grad_station_int_options +  ["Other"],help="P1P2 distance in gradient survey, in meters") 
     if grad_station_int == "Other":
         grad_station_int_manual = st.text_input("Eter gradient station interval")
         if grad_station_int_manual:
@@ -199,7 +285,7 @@ def main():
         admt_electrode_int_manual = st.text_input("Type AMDT Electode spacing")
         if admt_electrode_int_manual:
             admt_electrode_int = admt_electrode_int_manual
-    st.markdown('<div style="background-color:#1f4e79;color:white;padding:5px;border-radius:5px">4. RECCOMENDATIONS</div>', unsafe_allow_html=True)
+    st.markdown('<div style="background-color:#1f4e79;color:white;padding:5px;border-radius:5px">5. RECCOMENDATIONS</div>', unsafe_allow_html=True)
     st.text("")
     recom_bores = st.text_input("Number of Ground Marking Bore points",placeholder="6",help="howmany points marked in the field/site")
     final_recom_points = st.text_input("Number Of Finalized Bore points",placeholder="3",help="howmany points finalized after analysis in the office")
@@ -215,7 +301,7 @@ def main():
     considerable_depths = st.text_input("Considerable Depths",help="200 - 1000 feets",placeholder="200 - 1000 feets")
     
         
-    st.markdown('<div style="background-color:#1f4e79;color:white;padding:5px;border-radius:5px">5. GEOLOGY & MORPHOLOGY</div>', unsafe_allow_html=True)
+    st.markdown('<div style="background-color:#1f4e79;color:white;padding:5px;border-radius:5px">6. GEOLOGY & MORPHOLOGY</div>', unsafe_allow_html=True)
     st.text("")
     terrain_type = st.selectbox("Terrain Type", options=terrain_options + ["Other"],help="surface geology of survey area; for example granite/basalt...")
     if terrain_type == "Other":
@@ -293,7 +379,7 @@ def main():
 
     st.write("---")
     st.write("Image Path : default")
-    st.markdown('<div style="background-color:#1f4e79;color:white;padding:5px;border-radius:5px">6. IMAGE PATHS</div>', unsafe_allow_html=True)
+    st.markdown('<div style="background-color:#1f4e79;color:white;padding:5px;border-radius:5px">7. IMAGE PATHS</div>', unsafe_allow_html=True)
     st.text("")
     # Default fixed path
     geology_img_default = r"C:\images\0.jpg"
