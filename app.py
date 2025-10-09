@@ -194,7 +194,7 @@ def main():
      
     st.markdown('<div style="background-color:#1f4e79;color:white;padding:5px;border-radius:5px">1. General Information</div>', unsafe_allow_html=True)
     st.text("")
-    client_name = st.text_input("CLIENT NAME",placeholder="Rudra Venkatesh")
+    client_name = st.text_input("CLIENT NAME",placeholder="Shri. Rudra Venkatesh Garu/ Blue Infra Pvt Ltd",help= "please keep Shri. in front of name of the client and end of the name Garu if company directly give name with at the end Pvt Ltd")
     date_selected = st.date_input("SURVEY DATE", value=date.today())
     date_selected = date_selected.strftime("%d-%m-%Y")
     ref_no = st.text_input("Project Name/Reference",help="SN/12/2025",placeholder="SN/12/2025")
@@ -798,3 +798,4 @@ def main():
 
 if __name__ == "__main__":
     main()
+
