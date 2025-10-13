@@ -58,7 +58,7 @@ body, .block-container {
 </style>
 
 <div class="header">
-    🌟 Geophysical App
+---
     <nav>
         <a href="#" style="color: white; text-decoration: none; margin: 0 15px;">Home</a>
         <a href="#" style="color: white; text-decoration: none; margin: 0 15px;">About</a>
@@ -73,6 +73,32 @@ body, .block-container {
 
 
 st.markdown("</div>", unsafe_allow_html=True)
+
+st.markdown("""
+    <style>
+        /* The bar container */
+        .custom-bar {
+            background-color: #D3F527;        /* Bar color: change this */
+            position: absolute;                /* Fixed position on viewport */
+            top: 4.7cm;                        /* Vertical position from the top */
+            left: -10%;                      /* Horizontal position from left */
+            width: 120%;                     /* Width of the bar */
+            height: 0.4cm;                  /* Height (thickness) of the bar */
+            z-index: 999;                   /* Keeps the bar on top */
+        }
+
+        /* Optional: add a subtle shadow for depth */
+        .custom-bar-shadow {
+            box-shadow: 0px 0px 8px rgba(0, 0, 0, 0.2);
+        }
+    </style>
+
+    <!-- The actual bar element -->
+    <div class="custom-bar custom-bar-shadow"></div>
+    """, unsafe_allow_html=True)
+
+
+
 
 
 def save_to_excel(df: pd.DataFrame, file_path="data.xlsx") -> bytes:
@@ -98,18 +124,20 @@ def main():
     LOGO_URL = "https://bebpl.com/wp-content/uploads/2023/07/BLUE-ENERGY-lFINAL-LOGO.png"
     
     st.markdown(
-    f'<div style="text-align:center;"><img src="{LOGO_URL}" style="max-width:400px; height:auto;"></div>',
+    f'<div style="text-align:center;"><img src="{LOGO_URL}" style="max-width:350px; height:10; padding-top: 0.005cm;",></div>',
     unsafe_allow_html=True
 )
+    st.text("")
+    st.text("")
     st.title("DATA FORM-GROUNDWATER SURVEY-REPORT")  
     st.text("")
     st.markdown(
     """
     <style>
     .stApp {
-        background: linear-gradient(-45deg, #ee7752, #e73c7e, #23a6d5, #23d5ab);
+        background: linear-gradient(to right, #000080, #F5A623, #D0D0D0 ); 
         background-size: 400% 400%;
-        animation: candy 12s ease infinite;
+        animation: candy 25s ease infinite;
         color: black;
     }
 
@@ -205,9 +233,9 @@ def main():
     pin = st.text_input("PINCODE")
     area = st.text_input("AREA",help="survey area in terms of Acres/Sq Yards/Sq Feets",value="15 Acres")
     nearest_town = st.text_input("Nearest Town",help="Enter Nearest Town to the survey area")
-    to_nearest_town = st.text_input("Distcne To Nearest Town",help="in terms of km",value="10 km" )
+    to_nearest_town = st.text_input("Distance To Nearest Town",help="in terms of km",value="10 km" )
     nearest_city = st.text_input("Nearest City",help="Enter Nearest City to the survey area")
-    to_nearest_city = st.text_input("Distcne To Nearest City",help="in terms of km",value="80 km" )
+    to_nearest_city = st.text_input("Distance To Nearest City",help="in terms of km",value="80 km" )
     
     type_of_land = st.selectbox("Type of Land",options=type_of_land_options + ["Other"],help="select from dropdown list")
     if type_of_land == "Other":
@@ -246,7 +274,9 @@ def main():
     
     st.markdown('<div style="background-color:#1f4e79;color:white;padding:5px;border-radius:5px">3. Hydro-Geological</div>', unsafe_allow_html=True)
     st.text("")
-    h_geo = st.text_area("Describe hydrogeology and existing bores", height=200,help="this description directly will be inserted as paragrah in the report")
+    h_geo = st.text_area("Describe hydrogeology and existing bores", height=250,
+                          value="Hydrogeology investigates the occurrence, movement, and quality of groundwater within the Earth’s subsurface, emphasizing the role of geologic formations in controlling flow and storage. It integrates geological, hydrological, and geochemical principles to understand aquifer characteristics, recharge and discharge processes, and groundwater–surface water interactions. This knowledge is fundamental for assessing water availability, managing resources sustainably, and mitigating contamination risks across diverse geologic settings.",
+                          help="this description directly will be inserted as paragrah in the report")
     
     st.markdown('<div style="background-color:#1f4e79;color:white;padding:5px;border-radius:5px">4. GEOPHYSICAL</div>', unsafe_allow_html=True)
     st.text("")
@@ -386,159 +416,159 @@ def main():
 
     # Text input for image path, prefilled with default
     geology_img_path = st.text_input(
-        "Geology Image Path:",value=geology_img_default,help="You can edit this if image file path is different"
+        "Geology Image Path:",value=geology_img_default,help="You can edit this if image file path is different",placeholder=geology_img_default
         )
     
     
     home_page_default = r"C:\images\1.jpg"
-    home_page_path = st.text_input( "home_page_IMG",value=home_page_default)
+    home_page_path = st.text_input( "home_page_IMG",value=home_page_default,placeholder=home_page_default)
     
     study_area_default = r"C:\images\2.jpg"
-    study_area_path = st.text_input("Study_Area_IMG",value=study_area_default)
+    study_area_path = st.text_input("Study_Area_IMG",value=study_area_default,placeholder=study_area_default)
     
     gw_prospects_default = r"C:\images\3.jpg"
-    gw_prospects_path = st.text_input("Ground water Prospects IMG",value=gw_prospects_default)
+    gw_prospects_path = st.text_input("Ground water Prospects IMG",value=gw_prospects_default,placeholder=gw_prospects_default)
     
     drainage_pattern_default = r"C:\images\4.jpg"
-    drainage_pattern_path = st.text_input("Drainage_Pattern_IMG",value=drainage_pattern_default)
+    drainage_pattern_path = st.text_input("Drainage_Pattern_IMG",value=drainage_pattern_default,placeholder=drainage_pattern_default)
     
     lineaments_default =r"C:\images\5.jpg"
-    lineaments_path = st.text_input("Lineament IMG",value=lineaments_default)
+    lineaments_path = st.text_input("Lineament IMG",value=lineaments_default,placeholder=lineaments_default)
     
     land_u_land_c_default = r"C:\images\6.jpg"
-    land_u_land_c_path = st.text_input("Land Use Land COver IMG",value=land_u_land_c_default)
+    land_u_land_c_path = st.text_input("Land Use Land COver IMG",value=land_u_land_c_default,placeholder=land_u_land_c_default)
     
     existing_bores_default = r"C:\images\-1.jpg"
-    existing_bores_path = st.text_input("Existing_Bores_IMG",value=existing_bores_default)
+    existing_bores_path = st.text_input("Existing_Bores_IMG",value=existing_bores_default,placeholder=existing_bores_default)
     
     grad_plan_default = r"C:\images\7.jpg"
-    grad_plan_path = st.text_input("Gradient PLAN IMG",value=grad_plan_default)
+    grad_plan_path = st.text_input("Gradient PLAN IMG",value=grad_plan_default,placeholder=grad_plan_default)
     
     
     res_grad_profiles_1_default =r"C:\images\8.jpg"
-    res_grad_profiles_1_path = st.text_input("Resistivity Profile: 1",value=res_grad_profiles_1_default)
+    res_grad_profiles_1_path = st.text_input("Resistivity Profile: 1",value=res_grad_profiles_1_default,placeholder=res_grad_profiles_1_default)
     res_grad_profiles_2_default =r"C:\images\9.jpg"
-    res_grad_profiles_2_path = st.text_input("Resistivity Profile: 2",value=res_grad_profiles_2_default)
+    res_grad_profiles_2_path = st.text_input("Resistivity Profile: 2",value=res_grad_profiles_2_default,placeholder=res_grad_profiles_2_default)
     res_contour_1_default =r"C:\images\10.jpg"
-    res_contour_1_path = st.text_input("Resistivity_Contour Map",value=res_contour_1_default)
+    res_contour_1_path = st.text_input("Resistivity_Contour Map",value=res_contour_1_default,placeholder=res_contour_1_default)
     res_contour_1_3d_default =r"C:\images\11.jpg"
-    res_contour_1_3d_path = st.text_input("Resistivity_3D IMAGE",value=res_contour_1_3d_default)
+    res_contour_1_3d_path = st.text_input("Resistivity_3D IMAGE",value=res_contour_1_3d_default,placeholder=res_contour_1_3d_default)
     admt_pqwt_plan_default =r"C:\images\12.jpg"
     
     
-    
-    admt_pqwt_plan_path = st.text_input("ADMT_PQWT PLAN IMAGE",value=admt_pqwt_plan_default)
+    admt_pqwt_plan_path = st.text_input("ADMT_PQWT PLAN IMAGE",value=admt_pqwt_plan_default,placeholder=admt_pqwt_plan_default)
     
     admt_l_1_default = r"C:\images\13.jpg"
-    admt_l_1_path = st.text_input("ADMT_IMAGE-1",value=admt_l_1_default)
+    admt_l_1_path = st.text_input("ADMT_IMAGE-1",value=admt_l_1_default,placeholder=admt_l_1_default)
     
     admt_l_2_default = r"C:\images\14.jpg"
-    admt_l_2_path = st.text_input("ADMT_IMAGE-2",value=admt_l_2_default)
+    admt_l_2_path = st.text_input("ADMT_IMAGE-2",value=admt_l_2_default,placeholder=admt_l_2_default)
     
     admt_l_3_default = r"C:\images\15.jpg"
-    admt_l_3_path = st.text_input("ADMT_IMAGE-3",value=admt_l_3_default)
+    admt_l_3_path = st.text_input("ADMT_IMAGE-3",value=admt_l_3_default,placeholder=admt_l_3_default)
     
     admt_l_4_default = r"C:\images\16.jpg"
-    admt_l_4_path = st.text_input("ADMT_IMAGE-4",value=admt_l_4_default)
+    admt_l_4_path = st.text_input("ADMT_IMAGE-4",value=admt_l_4_default,placeholder=admt_l_4_default)
     
     admt_l_5_default = r"C:\images\17.jpg"
-    admt_l_5_path = st.text_input("ADMT_IMAGE-5",value=admt_l_5_default)
+    admt_l_5_path = st.text_input("ADMT_IMAGE-5",value=admt_l_5_default,placeholder=admt_l_5_default)
     
     admt_l_6_default = r"C:\images\35.jpg"
-    admt_l_6_path = st.text_input("ADMT_IMAGE-6",value=admt_l_6_default)
+    admt_l_6_path = st.text_input("ADMT_IMAGE-6",value=admt_l_6_default,placeholder=admt_l_6_default)
     
     admt_l_7_default = r"C:\images\36.jpg"
-    admt_l_7_path = st.text_input("ADMT_IMAGE-7",value=admt_l_7_default)
+    admt_l_7_path = st.text_input("ADMT_IMAGE-7",value=admt_l_7_default,placeholder=admt_l_7_default)
     
     admt_l_8_default = r"C:\images\37.jpg"
-    admt_l_8_path = st.text_input("ADMT_IMAGE-8",value=admt_l_8_default)
+    admt_l_8_path = st.text_input("ADMT_IMAGE-8",value=admt_l_8_default,placeholder=admt_l_8_default)
     
     admt_l_9_default = r"C:\images\38.jpg"
-    admt_l_9_path = st.text_input("ADMT_IMAGE-9",value=admt_l_9_default)
+    admt_l_9_path = st.text_input("ADMT_IMAGE-9",value=admt_l_9_default,placeholder=admt_l_9_default)
     
     admt_l_10_default = r"C:\images\39.jpg"
-    admt_l_10_path = st.text_input("ADMT_IMAGE-10",value=admt_l_10_default)
+    admt_l_10_path = st.text_input("ADMT_IMAGE-10",value=admt_l_10_default,placeholder=admt_l_10_default)
     
     admt_l_11_default = r"C:\images\40.jpg"
-    admt_l_11_path = st.text_input("ADMT_IMAGE-11",value=admt_l_11_default)
+    admt_l_11_path = st.text_input("ADMT_IMAGE-11",value=admt_l_11_default,placeholder=admt_l_11_default)
     
     admt_l_12_default = r"C:\images\41.jpg"
-    admt_l_12_path = st.text_input("ADMT_IMAGE-12",value=admt_l_12_default)
+    admt_l_12_path = st.text_input("ADMT_IMAGE-12",value=admt_l_12_default,placeholder=admt_l_12_default)
     
     admt_l_13_default = r"C:\images\42.jpg"
-    admt_l_13_path = st.text_input("ADMT_IMAGE-13",value=admt_l_13_default)
+    admt_l_13_path = st.text_input("ADMT_IMAGE-13",value=admt_l_13_default,placeholder=admt_l_13_default)
     
     admt_l_14_default = r"C:\images\43.jpg"
-    admt_l_14_path = st.text_input("ADMT_IMAGE-14",value=admt_l_14_default)
+    admt_l_14_path = st.text_input("ADMT_IMAGE-14",value=admt_l_14_default,placeholder=admt_l_14_default)
     
     admt_l_15_default = r"C:\images\44.jpg"
-    admt_l_15_path = st.text_input("ADMT_IMAGE-15",value=admt_l_15_default)
+    admt_l_15_path = st.text_input("ADMT_IMAGE-15",value=admt_l_15_default,placeholder=admt_l_15_default)
     
     admt_l_16_default = r"C:\images\45.jpg"
-    admt_l_16_path = st.text_input("ADMT_IMAGE-16",value=admt_l_16_default)
+    admt_l_16_path = st.text_input("ADMT_IMAGE-16",value=admt_l_16_default,placeholder=admt_l_16_default)
     
     admt_l_17_default = r"C:\images\46.jpg"
-    admt_l_17_path = st.text_input("ADMT_IMAGE-17",value=admt_l_17_default)
+    admt_l_17_path = st.text_input("ADMT_IMAGE-17",value=admt_l_17_default,placeholder=admt_l_17_default)
     
     admt_l_18_default = r"C:\images\47.jpg"
-    admt_l_18_path = st.text_input("ADMT_IMAGE-18",value=admt_l_18_default)
+    admt_l_18_path = st.text_input("ADMT_IMAGE-18",value=admt_l_18_default,placeholder=admt_l_18_default)
+   
     
     admt_l_19_default = r"C:\images\48.jpg"
-    admt_l_19_path = st.text_input("ADMT_IMAGE-19",value=admt_l_19_default)
+    admt_l_19_path = st.text_input("ADMT_IMAGE-19",value=admt_l_19_default,placeholder=admt_l_19_default)
     
     admt_l_20_default = r"C:\images\49.jpg"
-    admt_l_20_path = st.text_input("ADMT_IMAGE-20",value=admt_l_20_default)
+    admt_l_20_path = st.text_input("ADMT_IMAGE-20",value=admt_l_20_default,placeholder=admt_l_20_default)
     
     recom_points_default = r"C:\images\18.jpg"
-    recom_points_path = st.text_input("Recommended Points IMG",value=recom_points_default)
+    recom_points_path = st.text_input("Recommended Points IMG",value=recom_points_default,placeholder=recom_points_default)
     
     field_pic_default = r"C:\images\19.jpg"
-    field_pic_path = st.text_input("Field Picture",value=field_pic_default)
+    field_pic_path = st.text_input("Field Picture",value=field_pic_default,placeholder=field_pic_default)
     
     pqwt_l_1_default =r"C:\images\20.jpg"
-    pqwt_l_1_path = st.text_input("PQWT IMG-1",value= pqwt_l_1_default)
+    pqwt_l_1_path = st.text_input("PQWT IMG-1",value= pqwt_l_1_default,placeholder=pqwt_l_1_default)
     
     pqwt_l_2_default =r"C:\images\21.jpg"
-    pqwt_l_2_path = st.text_input("PQWT IMG-2",value= pqwt_l_2_default)
+    pqwt_l_2_path = st.text_input("PQWT IMG-2",value= pqwt_l_2_default,placeholder=pqwt_l_2_default)
     
     pqwt_l_3_default =r"C:\images\22.jpg"
-    pqwt_l_3_path = st.text_input("PQWT IMG-3",value= pqwt_l_3_default)
+    pqwt_l_3_path = st.text_input("PQWT IMG-3",value= pqwt_l_3_default,placeholder=pqwt_l_3_default)
     
     pqwt_l_4_default =r"C:\images\23.jpg"
-    pqwt_l_4_path = st.text_input("PQWT IMG-4",value= pqwt_l_4_default)
+    pqwt_l_4_path = st.text_input("PQWT IMG-4",value= pqwt_l_4_default,placeholder=pqwt_l_4_default)
     
     pqwt_l_5_default =r"C:\images\24.jpg"
-    pqwt_l_5_path = st.text_input("PQWT IMG-5",value= pqwt_l_5_default)
+    pqwt_l_5_path = st.text_input("PQWT IMG-5",value= pqwt_l_5_default,placeholder=pqwt_l_5_default)
     
     pqwt_l_6_default =r"C:\images\25.jpg"
-    pqwt_l_6_path = st.text_input("PQWT IMG-6",value= pqwt_l_6_default)
+    pqwt_l_6_path = st.text_input("PQWT IMG-6",value= pqwt_l_6_default,placeholder=pqwt_l_6_default)
     
     pqwt_l_7_default =r"C:\images\26.jpg"
-    pqwt_l_7_path = st.text_input("PQWT IMG-7",value= pqwt_l_7_default)
+    pqwt_l_7_path = st.text_input("PQWT IMG-7",value= pqwt_l_7_default,placeholder=pqwt_l_7_default)
     
     pqwt_l_8_default =r"C:\images\27.jpg"
-    pqwt_l_8_path = st.text_input("PQWT IMG-8",value= pqwt_l_8_default)
+    pqwt_l_8_path = st.text_input("PQWT IMG-8",value= pqwt_l_8_default,placeholder=pqwt_l_8_default)
     
     pqwt_l_9_default =r"C:\images\28.jpg"
-    pqwt_l_9_path = st.text_input("PQWT IMG-9",value= pqwt_l_9_default)
+    pqwt_l_9_path = st.text_input("PQWT IMG-9",value= pqwt_l_9_default,placeholder=pqwt_l_9_default)
     
     pqwt_l_10_default =r"C:\images\29.jpg"
-    pqwt_l_10_path = st.text_input("PQWT IMG-10",value= pqwt_l_10_default)
+    pqwt_l_10_path = st.text_input("PQWT IMG-10",value= pqwt_l_10_default,placeholder=pqwt_l_10_default)
     
     pqwt_l_11_default =r"C:\images\30.jpg"
-    pqwt_l_11_path = st.text_input("PQWT IMG-11",value= pqwt_l_11_default)
+    pqwt_l_11_path = st.text_input("PQWT IMG-11",value= pqwt_l_11_default,placeholder=pqwt_l_11_default)
     
     pqwt_l_12_default =r"C:\images\31.jpg"
-    pqwt_l_12_path = st.text_input("PQWT IMG-12",value= pqwt_l_12_default)
+    pqwt_l_12_path = st.text_input("PQWT IMG-12",value= pqwt_l_12_default,placeholder=pqwt_l_12_default)
     
     pqwt_l_13_default =r"C:\images\32.jpg"
-    pqwt_l_13_path = st.text_input("PQWT IMG-13",value= pqwt_l_13_default)
+    pqwt_l_13_path = st.text_input("PQWT IMG-13",value= pqwt_l_13_default,placeholder=pqwt_l_13_default)
     
     pqwt_l_14_default =r"C:\images\33.jpg"
-    pqwt_l_14_path = st.text_input("PQWT IMG-14",value= pqwt_l_14_default)
+    pqwt_l_14_path = st.text_input("PQWT IMG-14",value= pqwt_l_14_default,placeholder=pqwt_l_14_default)
     
     pqwt_l_15_default =r"C:\images\34.jpg"
-    pqwt_l_15_path = st.text_input("PQWT IMG-15",value= pqwt_l_15_default)
+    pqwt_l_15_path = st.text_input("PQWT IMG-15",value= pqwt_l_15_default,placeholder=pqwt_l_15_default)
     
     
     if st.button("Submit"):
@@ -798,4 +828,3 @@ def main():
 
 if __name__ == "__main__":
     main()
-
